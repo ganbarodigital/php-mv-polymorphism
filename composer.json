@@ -1,5 +1,5 @@
 {
-    "name": "ganbarodigital/php-mv-type-dispatcher",
+    "name": "ganbarodigital/php-mv-polymorphism",
     "type": "library",
     "license": "BSD-3-Clause",
     "authors": [
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "GanbaroDigital\\TypeDispatcher\\": "src"
+            "GanbaroDigital\\Polymorphism\\": "src"
         }
     }
 }
