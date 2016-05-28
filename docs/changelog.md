@@ -10,4 +10,7 @@ pageflow_next_text: Contributing
 
 ## develop branch
 
-Nothing yet.
+### New
+
+* Added support for mapping types onto method names:
+  - added `TypeMapper` interface
