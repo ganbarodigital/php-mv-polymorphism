@@ -62,10 +62,13 @@ interface TypeMapper
      *         the item we want to dispatch
      * @param  array $dispatchTable
      *         the list of methods that are available
+     * @param  string $fallback
+     *         the value to return if there's no suitable entry for $item
+     *         in $dispatchTable
      * @return string
      *         the name of the method to call
      */
-    public function __invoke($item, array $dispatchTable);
+    public function __invoke($item, array $dispatchTable, $fallback = TypeMapper::FALLBACK_RESULT);
 
     /**
      * use an input item's data type to work out which method we should
@@ -75,8 +78,11 @@ interface TypeMapper
      *         the item we want to dispatch
      * @param  array $dispatchTable
      *         the list of methods that are available
+     * @param  string $fallback
+     *         the value to return if there's no suitable entry for $item
+     *         in $dispatchTable
      * @return string
      *         the name of the method to call
      */
-     public static function using($item, array $dispatchTable);
+    public static function using($item, array $dispatchTable, $fallback = TypeMapper::FALLBACK_RESULT);
 }
