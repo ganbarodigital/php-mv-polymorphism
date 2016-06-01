@@ -14,3 +14,4 @@ pageflow_next_text: Contributing
 
 * Added support for mapping types onto method names:
   - added `TypeMapper` interface
+  - added `MapDuckTypeToMethodName` class
