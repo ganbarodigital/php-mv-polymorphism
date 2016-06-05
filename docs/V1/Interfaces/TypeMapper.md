@@ -1,8 +1,8 @@
 ---
 currentSection: v1
 currentItem: Interfaces
-pageflow_prev_url: index.html
-pageflow_prev_text: Interfaces
+pageflow_prev_url: DispatchTable.html
+pageflow_prev_text: DispatchTable interface
 ---
 
 # TypeMapper
