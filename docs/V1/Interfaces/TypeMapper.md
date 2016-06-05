@@ -7,8 +7,8 @@ pageflow_prev_text: DispatchTable interface
 
 # TypeMapper
 
-<div class="callout warning" markdown="1">
-Not yet in a tagged release
+<div class="callout info">
+Since v1.2016060501
 </div>
 
 ## Description
