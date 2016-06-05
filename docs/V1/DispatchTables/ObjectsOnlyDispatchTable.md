@@ -1,8 +1,10 @@
 ---
 currentSection: v1
 currentItem: DispatchTables
-pageflow_prev_url: AllPurposePreCacheDispatchTable.html
-pageflow_prev_text: AllPurposePreCacheDispatchTable class
+pageflow_prev_url: AllPurposeDispatchTable.html
+pageflow_prev_text: AllPurposeDispatchTable class
+pageflow_next_url: TypeOnlyDispatchTable.html
+pageflow_next_text: TypeOnlyDispatchTable class
 ---
 
 # ObjectsOnlyDispatchTable

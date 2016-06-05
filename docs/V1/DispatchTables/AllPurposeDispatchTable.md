@@ -3,8 +3,8 @@ currentSection: v1
 currentItem: DispatchTables
 pageflow_prev_url: index.html
 pageflow_prev_text: DispatchTables
-pageflow_next_url: AllPurposePreCacheDispatchTable.html
-pageflow_next_text: AllPurposePreCacheDispatchTable class
+pageflow_next_url: ObjectsOnlyDispatchTable.html
+pageflow_next_text: ObjectsOnlyDispatchTable class
 ---
 
 # AllPurposeDispatchTable

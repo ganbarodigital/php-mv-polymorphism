@@ -19,5 +19,4 @@ pageflow_next_text: Contributing
 * Added support for improving performance of type mapping using intelligent caching dispatch tables:
   - added `DispatchTable` interface
   - added `AllPurposeDispatchTable` class
-  - added `AllPurposePreCacheDispatchTable` class
   - added `ObjectsOnlyDispatchTable` class
