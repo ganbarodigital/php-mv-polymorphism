@@ -25,5 +25,6 @@ Class | Description
 ------|------------
 [`AllPurposeDispatchTable`](AllPurposeDispatchTable.html) | best blend of performance and compatibility
 [`AllPurposeDispatchTable`](AllPurposeDispatchTable.html) | an all-purpose dispatch table with pre-caching of built-in PHP types
+[`ObjectsOnlyDispatchTable`](ObjectsOnlyDispatchTable) | high-performance dispatching of objects only
 
 Click on the name of a class to see full details.

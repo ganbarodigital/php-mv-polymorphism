@@ -3,11 +3,9 @@ currentSection: v1
 currentItem: DispatchTables
 pageflow_prev_url: AllPurposePreCacheDispatchTable.html
 pageflow_prev_text: AllPurposePreCacheDispatchTable class
-pageflow_next_url: ObjectsOnlyDispatchTable.html
-pageflow_next_text: ObjectsOnlyDispatchTable class
 ---
 
-# AllPurposePreCacheDispatchTable
+# ObjectsOnlyDispatchTable
 
 <div class="callout warning">
 Not yet in a tagged release
@@ -15,22 +13,32 @@ Not yet in a tagged release
 
 ## Description
 
-`AllPurposePreCacheDispatchTable` is a caching [`DispatchTable`](../Interfaces/DispatchTable.html). It provides a good blend of performance and accuracy.
+`ObjectsOnlyDispatchTable` is a caching [`DispatchTable`](../Interfaces/DispatchTable.html). It provides better performance for dispatching objects, but does not support dispatching non-objects at all.
 
-Use `AllPurposePreCacheDispatchTable` if you expect your polymorphic method to be called many times with most or all of the pre-cache types.
+Use `ObjectsOnlyDispatchTable` if your polymorphic method will only be called with an object as the parameter.
+
+<div class="callout danger" markdown="1">
+#### Here Be Dragons!
+
+If you call this dispatch table with a non-object, **your PHP code will fatal error**.
+
+Unfortunately, in our testing, we discovered that the extra code needed to support non-objects too removed most of the extra performance.
+
+If you need to support both objects and non-objects, use the [`AllPurposeDispatchTable`](AllPurposeDispatchTable.html).
+</div>
 
 Cache Strategy | Used?
 ---------------|---------
-pre-cache? | Yes: `NULL`, `boolean`, `double`, `integer`, `resource`
+pre-cache? | No
 post-cache? | Yes: objects
-pass-through? | Yes: `array`, `string`
+pass-through? | No
 
 ## Public Interface
 
-`AllPurposePreCacheDispatchTable` has the following public interface:
+`ObjectsOnlyDispatchTable` has the following public interface:
 
 ```php
-// AllPurposePreCacheDispatchTable lives in this namespace
+// ObjectsOnlyDispatchTable lives in this namespace
 namespace GanbaroDigital\Polymorphism\V1\DispatchTables;
 
 // our base classes and interfaces
@@ -39,7 +47,7 @@ use GanbaroDigital\Polymorphism\V1\Interfaces\DispatchTable;
 // our input type(s) and return type(s)
 use GanbaroDigital\Polymorphism\V1\Interfaces\TypeMapper;
 
-class AllPurposePreCacheDispatchTable implements DispatchTable
+class ObjectsOnlyDispatchTable implements DispatchTable
 {
     /**
      * create a new dispatch table
@@ -73,32 +81,24 @@ class AllPurposePreCacheDispatchTable implements DispatchTable
 
 ### Wrapping A TypeMapper
 
-`AllPurposePreCacheDispatchTable` takes:
+`ObjectsOnlyDispatchTable` takes:
 
 * a list of supported types and method names (the dispatch table)
 * an object that will work out which types map onto which method names (the `TypeMapper`)
 * and a value to return when there's no match (the fallback)
 
-You can safely use any of our type mapper objects with the `AllPurposePreCacheDispatchTable`.
+You can safely use any of our type mapper objects with the `ObjectsOnlyDispatchTable`.
 
 ## Class Contract
 
 Here is the contract for this class:
 
-    GanbaroDigital\Polymorphism\V1\DispatchTables\AllPurposePreCacheDispatchTable
+    GanbaroDigital\Polymorphism\V1\DispatchTables\ObjectsOnlyDispatchTable
      [x] Can instantiate
      [x] is DispatchTable
-     [x] populates cache on creation
+     [x] starts with empty cache
      [x] each instance has separate cache
-     [x] NULL gets cached
-     [x] array does not get cached
-     [x] true gets cached
-     [x] false gets cached
-     [x] double gets cached
-     [x] integer gets cached
      [x] object gets cached
-     [x] resource gets cached
-     [x] string does not get cached
      [x] will check the cache first
      [x] returns nothingMatchesTheInputType when no match found
      [x] can change the default fallback when no match found

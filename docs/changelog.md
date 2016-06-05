@@ -20,3 +20,4 @@ pageflow_next_text: Contributing
   - added `DispatchTable` interface
   - added `AllPurposeDispatchTable` class
   - added `AllPurposePreCacheDispatchTable` class
+  - added `ObjectsOnlyDispatchTable` class
