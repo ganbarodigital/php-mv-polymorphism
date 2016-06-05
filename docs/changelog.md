@@ -10,6 +10,12 @@ pageflow_next_text: Contributing
 
 ## develop branch
 
+Nothing yet.
+
+## v1.2016060501
+
+Released Sun 5th June 2016.
+
 ### New
 
 * Added support for mapping types onto method names:

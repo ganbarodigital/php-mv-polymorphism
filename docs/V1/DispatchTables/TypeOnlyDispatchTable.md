@@ -7,8 +7,8 @@ pageflow_prev_text: ObjectsOnlyDispatchTable class
 
 # TypeOnlyDispatchTable
 
-<div class="callout warning">
-Not yet in a tagged release
+<div class="callout info">
+Since v1.2016060501
 </div>
 
 ## Description
