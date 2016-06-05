@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">= 5.5",
-        "ganbarodigital/php-the-missing-bits": "^1.4",
+        "ganbarodigital/php-the-missing-bits": "^1.5",
         "ganbarodigital/php-http-status": "^2.0"
     },
     "require-dev": {
