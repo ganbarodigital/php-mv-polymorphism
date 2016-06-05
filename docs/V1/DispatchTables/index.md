@@ -25,5 +25,6 @@ Class | Description
 ------|------------
 [`AllPurposeDispatchTable`](AllPurposeDispatchTable.html) | best blend of performance and compatibility
 [`ObjectsOnlyDispatchTable`](ObjectsOnlyDispatchTable) | high-performance dispatching of objects only
+[`TypeOnlyDispatchTable`](TypeOnlyDispatchTable) | high-performance dispatching of expected types
 
 Click on the name of a class to see full details.

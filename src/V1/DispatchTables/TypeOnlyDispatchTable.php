@@ -49,10 +49,10 @@ use GanbaroDigital\Polymorphism\V1\Interfaces\TypeMapper;
 /**
  * map types to methods with built-in caching
  *
- * This dispatch table supports all possible data types. As a result, it's a
- * little slower than the alternatives, but it is rock solid.
+ * To use this dispatch table safely, you need to make sure that your
+ * $typeMethods table has entries for 'array' and 'string'
  */
-class AllPurposeDispatchTable implements DispatchTable
+class TypeOnlyDispatchTable implements DispatchTable
 {
     /**
      * our known results so far
@@ -88,7 +88,7 @@ class AllPurposeDispatchTable implements DispatchTable
      * create a new dispatch table
      *
      * @param array $typeMethods
-     *        a list of supported types and the method names they map onto
+     *        a list of supported types and the methods they map onto
      * @param TypeMapper $typeMapper
      *        the TypeMapper to use to inspect
      * @param string $fallback
@@ -99,41 +99,32 @@ class AllPurposeDispatchTable implements DispatchTable
         $this->typeMethods = $typeMethods;
         $this->typeMapper = $typeMapper;
         $this->fallback = $fallback;
+
+        // pre-seed the cache
+        $this->dispatchCache = $typeMethods;
     }
 
     /**
-     * inspect a variable, and determine which method name to return
+     * inspect a variable, and determine which method to call
      *
      * @param  mixed $item
      *         the item to describe
      * @return string
-     *         the method name that you should call
+     *         the method to call
      */
     public function mapTypeToMethodName($item)
     {
         // we are optimised for objects
         $type = @get_class($item);
-        if ($type === false || $item === null) {
-            if (is_string($item) || is_array($item)) {
-                // it isn't safe to cache these data types
-                // the result depends upon their contents
-                return $this->typeMapper->using($item, $this->typeMethods, $this->fallback);
-            }
-            else {
-                // this is NULL, boolean, double, integer, resource
-                //
-                // NOTE that callable is a pseudotype; it's something that
-                // other data types can satisfy
-                $type = gettype($item);
-            }
+        if ($type === false || $item === NULL) {
+            $type = gettype($item);
         }
 
-        // have we seen this before?
         if (isset($this->dispatchCache[$type])) {
             return $this->dispatchCache[$type];
         }
 
-        // first time we've seen this
+        // at this point, fall back to using the type mapper
         $this->dispatchCache[$type] = $this->typeMapper->using($item, $this->typeMethods, $this->fallback);
         return $this->dispatchCache[$type];
     }
