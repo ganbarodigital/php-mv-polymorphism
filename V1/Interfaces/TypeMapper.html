@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--[if lt IE 9]>
+            <script src="assets/html5shiv.js"></script>
+            <script src="assets/html5printshiv.js"></script>
+        <![endif]-->
+        <meta charset="utf-8"/>
+        <title>Polymorphism Library for PHP from Ganbaro Digital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/docs.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.css">
+        <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.js"></script>
+    </head>
+    <body data-ishi-anchors="1">
+        <header role="banner">
+            <div>
+                <p style="font-size: 34px; padding-top: 10px">Polymorphism Library for PHP</p>
+                <p style="font-size: 18px; border-bottom: 1px solid; padding-bottom: 10px">Polymorphism support for your code</p>
+            </div>
+            <!--<a href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">
+                <img src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ganbarodigital.svg" width="60" height="60" style="vertical-align: middle; float: left; margin-right: 15px">
+            </a>-->
+            <nav class="navbar topbar">
+                <ul>
+                                            <li class="">
+                            <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">Overview</a>
+                        </li>
+                                            <li class="current">
+                            <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Version 1.x</a>
+                        </li>
+                                    </ul>
+            </nav>
+        </header>
+                                                                            <header role="subnav">
+                        <nav class="navbar">
+                            <ul>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Introduction</a>
+                                    </li>
+                                                                    <li class="current">
+                                        <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/Interfaces/index.html">Interfaces</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/DispatchTables/index.html">DispatchTables</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/TypeMapping/index.html">TypeMapping</a>
+                                    </li>
+                                                            </ul>
+                        </nav>
+                    </header>
+                                            <main role="main">
+                        <nav class="pageflow">
+              <ul>
+                                    <li><a href="DispatchTable.html">Prev: DispatchTable interface</a></li>
+                                                      <li></li>
+                                </ul>
+            </nav>
+            
+            <article>
+                <h1 id="typemapper">TypeMapper</h1>
+<div class="callout info">
+Since v1.2016060501
+</div>
+<h2 id="description">Description</h2>
+<p><code>TypeMapper</code> is an interface. It is the base interface that all dispatch table-based type mappers implement.</p>
+<h2 id="public-interface">Public Interface</h2>
+<p><code>TypeMapper</code> has the following public interface:</p>
+<pre><code class="language-php">// TypeMapper lives in this namespace
+namespace GanbaroDigital\Polymorphism\V1\Interfaces;
+
+/**
+ * use an input item's data type to work out which method we should call
+ */
+interface TypeMapper
+{
+    /**
+     * this is the result we return when there's no matching method
+     * in the dispatch table that we're given
+     */
+    const FALLBACK_RESULT = "nothingMatchesTheInputType";
+
+    /**
+     * use an input item's data type to work out which method we should
+     * call
+     *
+     * @param  mixed $item
+     *         the item we want to dispatch
+     * @param  array $dispatchTable
+     *         the list of methods that are available
+     * @param  string $fallback
+     *         the value to return if there's no suitable entry for $item
+     *         in $dispatchTable
+     * @return string
+     *         the name of the method to call
+     */
+    public function __invoke(
+        $item,
+        array $dispatchTable,
+        $fallback = TypeMapper::FALLBACK_RESULT
+    );
+
+    /**
+     * use an input item's data type to work out which method we should
+     * call
+     *
+     * @param  mixed $item
+     *         the item we want to dispatch
+     * @param  array $dispatchTable
+     *         the list of methods that are available
+     * @param  string $fallback
+     *         the value to return if there's no suitable entry for $item
+     *         in $dispatchTable
+     * @return string
+     *         the name of the method to call
+     */
+    public static function using(
+        $item,
+        array $dispatchTable,
+        $fallback = TypeMapper::FALLBACK_RESULT
+    );
+}</code></pre>
+<h2 id="how-to-use">How To Use</h2>
+<h3 id="the-dispatch-table">The Dispatch Table</h3>
+<p>Each <code>TypeMapper</code> needs to support the <em>dispatch table</em>.</p>
+<p><code>$dispatchTable</code> is an associative array.</p>
+<ul>
+<li>
+<p>Each array key is a type.</p>
+<p>This can be PHP's built-in types: <code>NULL</code>, <code>array</code>, <code>boolean</code>, <code>callable</code>, <code>double</code>, <code>integer</code>, <code>object</code>, <code>resource</code>, or <code>string</code>.</p>
+<p>It can also be the full name of any classes or interfaces defined by PHP itself, any loaded PHP extensions, and your code.</p>
+</li>
+<li>
+<p>Each array value is a method name, as a string.</p>
+<p>This is the string that will be returned by the <code>::__invoke()</code> and <code>::using()</code> methods if a successful match is found.</p>
+</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>None at this time.</p>
+            </article>
+
+                        <nav class="pageflow">
+              <ul>
+                                    <li><a href="DispatchTable.html">Prev: DispatchTable interface</a></li>
+                                                      <li></li>
+                                </ul>
+            </nav>
+                    </main>
+
+        <aside class="sidebar">
+            <h2>This Page</h2>
+            <nav class="toc" data-type="ishi-toc" data-max-depth="3">
+            </nav>
+        </aside>
+        <footer>
+            <div class="strapline">
+                <p>Copyright &copy; 2015 <a href="http://ganbarodigital.com">Ganbaro Digital Ltd</a>. Released under the <a href="http://ganbarodigital.github.io/php-mv-polymorphism/license.html">New BSD</a> license.
+                                            Find Polymorphism Library for PHP on <a href="https://github.com/ganbarodigital/php-mv-polymorphism">GitHub</a>.
+                                        Built with <a href="http://couscous.io/">Couscous</a>.
+                </p>
+            </div>
+        </footer>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/laroux.js"></script>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ishi.js"></script>
+    </body>
+</html>

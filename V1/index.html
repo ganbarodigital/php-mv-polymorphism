@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--[if lt IE 9]>
+            <script src="assets/html5shiv.js"></script>
+            <script src="assets/html5printshiv.js"></script>
+        <![endif]-->
+        <meta charset="utf-8"/>
+        <title>Polymorphism Library for PHP from Ganbaro Digital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/docs.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.css">
+        <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.js"></script>
+    </head>
+    <body data-ishi-anchors="1">
+        <header role="banner">
+            <div>
+                <p style="font-size: 34px; padding-top: 10px">Polymorphism Library for PHP</p>
+                <p style="font-size: 18px; border-bottom: 1px solid; padding-bottom: 10px">Polymorphism support for your code</p>
+            </div>
+            <!--<a href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">
+                <img src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ganbarodigital.svg" width="60" height="60" style="vertical-align: middle; float: left; margin-right: 15px">
+            </a>-->
+            <nav class="navbar topbar">
+                <ul>
+                                            <li class="">
+                            <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">Overview</a>
+                        </li>
+                                            <li class="current">
+                            <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Version 1.x</a>
+                        </li>
+                                    </ul>
+            </nav>
+        </header>
+                                                                            <header role="subnav">
+                        <nav class="navbar">
+                            <ul>
+                                                                    <li class="current">
+                                        <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Introduction</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/Interfaces/index.html">Interfaces</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/DispatchTables/index.html">DispatchTables</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/TypeMapping/index.html">TypeMapping</a>
+                                    </li>
+                                                            </ul>
+                        </nav>
+                    </header>
+                                            <main role="main">
+                        <nav class="pageflow">
+              <ul>
+                                    <li></li>
+                                                      <li><a href="Interfaces/index.html">Next: Interfaces</a></li>
+                                </ul>
+            </nav>
+            
+            <article>
+                <h1 id="version-1x">Version 1.x</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Version 1 is based on the <code>LookUpMethodByType</code> feature from our original <code>php-reflection</code> library. We've retired that library, moving parts of it into <a href="https://ganbarodigital.github.io/php-the-missing-bits/">PHP: The Missing Bits</a>, some of it into here, and the rest into a new multi-variant <a href="https://ganbarodigital.github.io/php-mv-reflection">Reflection Library</a>.</p>
+<h2 id="key-ideas">Key Ideas</h2>
+<p>The key idea in Version 1 is <em>type mapping</em>:</p>
+<ul>
+<li>Use a dispatch table to work out which method to call</li>
+</ul>
+<h2 id="components">Components</h2>
+<p>Version 1 ships with the following namespaces:</p>
+<table>
+<thead>
+<tr>
+<th>Namespace</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Interfaces/index.html"><code>GanbaroDigital\Polymorphism\V1\Interfaces</code></a></td>
+<td>interfaces defined by the Polymorphism Library</td>
+</tr>
+<tr>
+<td><a href="DispatchTables/index.html"><code>GanbaroDigital\Polymorphism\V1\DispatchTables</code></a></td>
+<td>caching wrappers around the <code>TypeMapper</code></td>
+</tr>
+<tr>
+<td><a href="TypeMapping/index.html"><code>GanbaroDigital\Polymorphism\V1\TypeMapping</code></a></td>
+<td>map types onto methods</td>
+</tr>
+</tbody>
+</table>
+<p>Click on the namespace to learn more about the classes in that component.</p>
+            </article>
+
+                        <nav class="pageflow">
+              <ul>
+                                    <li></li>
+                                                      <li><a href="Interfaces/index.html">Next: Interfaces</a></li>
+                                </ul>
+            </nav>
+                    </main>
+
+        <aside class="sidebar">
+            <h2>This Page</h2>
+            <nav class="toc" data-type="ishi-toc" data-max-depth="3">
+            </nav>
+        </aside>
+        <footer>
+            <div class="strapline">
+                <p>Copyright &copy; 2015 <a href="http://ganbarodigital.com">Ganbaro Digital Ltd</a>. Released under the <a href="http://ganbarodigital.github.io/php-mv-polymorphism/license.html">New BSD</a> license.
+                                            Find Polymorphism Library for PHP on <a href="https://github.com/ganbarodigital/php-mv-polymorphism">GitHub</a>.
+                                        Built with <a href="http://couscous.io/">Couscous</a>.
+                </p>
+            </div>
+        </footer>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/laroux.js"></script>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ishi.js"></script>
+    </body>
+</html>

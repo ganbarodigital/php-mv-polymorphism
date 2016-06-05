@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--[if lt IE 9]>
+            <script src="assets/html5shiv.js"></script>
+            <script src="assets/html5printshiv.js"></script>
+        <![endif]-->
+        <meta charset="utf-8"/>
+        <title>Polymorphism Library for PHP from Ganbaro Digital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/docs.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.css">
+        <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.js"></script>
+    </head>
+    <body data-ishi-anchors="1">
+        <header role="banner">
+            <div>
+                <p style="font-size: 34px; padding-top: 10px">Polymorphism Library for PHP</p>
+                <p style="font-size: 18px; border-bottom: 1px solid; padding-bottom: 10px">Polymorphism support for your code</p>
+            </div>
+            <!--<a href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">
+                <img src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ganbarodigital.svg" width="60" height="60" style="vertical-align: middle; float: left; margin-right: 15px">
+            </a>-->
+            <nav class="navbar topbar">
+                <ul>
+                                            <li class="">
+                            <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">Overview</a>
+                        </li>
+                                            <li class="current">
+                            <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Version 1.x</a>
+                        </li>
+                                    </ul>
+            </nav>
+        </header>
+                                                                            <header role="subnav">
+                        <nav class="navbar">
+                            <ul>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Introduction</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/Interfaces/index.html">Interfaces</a>
+                                    </li>
+                                                                    <li class="current">
+                                        <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/DispatchTables/index.html">DispatchTables</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/TypeMapping/index.html">TypeMapping</a>
+                                    </li>
+                                                            </ul>
+                        </nav>
+                    </header>
+                                            <main role="main">
+                        <nav class="pageflow">
+              <ul>
+                                    <li><a href="ObjectsOnlyDispatchTable.html">Prev: ObjectsOnlyDispatchTable class</a></li>
+                                                      <li></li>
+                                </ul>
+            </nav>
+            
+            <article>
+                <h1 id="typeonlydispatchtable">TypeOnlyDispatchTable</h1>
+<div class="callout info">
+Since v1.2016060501
+</div>
+<h2 id="description">Description</h2>
+<p><code>TypeOnlyDispatchTable</code> is a caching <a href="../Interfaces/DispatchTable.html"><code>DispatchTable</code></a>. It provides better performance than the <a href="AllPurposeDispatchTable.html"><code>AllPurposeDispatchTable</code></a> when you want to inspect the contents of an array or a string to determine their type.</p>
+<div class="callout danger">
+<h4 id="here-be-dragons">Here Be Dragons!</h4>
+<p>Make sure that your <code>$typeMethods</code> constructor parameter includes entries both for <code>array</code> and <code>string</code>.</p>
+<p>If you don't, <code>TypeOnlyDispatchTable</code> will call the <code>$typeMapper</code> that you supply. Your <code>$typeMapper</code> might inspect the contents of the array or string to determine what type it is. This will poison the <code>TypeOnlyDispatchTable</code> internal cache. And it will be a complete bugger for you to track down and debug!</p>
+<p>If you're not sure what to do, stick with the <a href="AllPurposeDispatchTable.html"><code>AllPurposeDispatchTable</code></a> instead.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Cache Strategy</th>
+<th>Used?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pre-cache?</td>
+<td>Yes: uses your <code>$typeMethods</code> list</td>
+</tr>
+<tr>
+<td>post-cache?</td>
+<td>Yes: all types</td>
+</tr>
+<tr>
+<td>pass-through?</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-interface">Public Interface</h2>
+<p><code>TypeOnlyDispatchTable</code> has the following public interface:</p>
+<pre><code class="language-php">// TypeOnlyDispatchTable lives in this namespace
+namespace GanbaroDigital\Polymorphism\V1\DispatchTables;
+
+// our base classes and interfaces
+use GanbaroDigital\Polymorphism\V1\Interfaces\DispatchTable;
+
+// our input type(s) and return type(s)
+use GanbaroDigital\Polymorphism\V1\Interfaces\TypeMapper;
+
+class TypeOnlyDispatchTable implements DispatchTable
+{
+    /**
+     * create a new dispatch table
+     *
+     * @param array $typeMethods
+     *        a list of supported types and the method names they map onto
+     * @param TypeMapper $typeMapper
+     *        the TypeMapper to use to inspect
+     * @param string $fallback
+     *        what value do we return if our TypeMapper does not find a match?
+     */
+    public function __construct(
+        $typeMethods,
+        TypeMapper $typeMapper,
+        $fallback = TypeMapper::FALLBACK_RESULT
+    );
+
+    /**
+     * inspect a variable, and determine which method name to return
+     *
+     * @param  mixed $item
+     *         the item to describe
+     * @return string
+     *         the method name that you should call
+     */
+    public function mapTypeToMethodName($item);
+}</code></pre>
+<h2 id="how-to-use">How To Use</h2>
+<h3 id="wrapping-a-typemapper">Wrapping A TypeMapper</h3>
+<p><code>TypeOnlyDispatchTable</code> takes:</p>
+<ul>
+<li>a list of supported types and method names (the dispatch table)</li>
+<li>an object that will work out which types map onto which method names (the <code>TypeMapper</code>)</li>
+<li>and a value to return when there's no match (the fallback)</li>
+</ul>
+<p>You can safely use any of our type mapper objects with the <code>TypeOnlyDispatchTable</code>, as long as you provide entries for <code>array</code> and <code>string</code> in your <code>$typeMethods</code> constructor parameter.</p>
+<h2 id="class-contract">Class Contract</h2>
+<p>Here is the contract for this class:</p>
+<pre><code>GanbaroDigital\Polymorphism\V1\DispatchTables\TypeOnlyDispatchTable
+ [x] Can instantiate
+ [x] is DispatchTable
+ [x] uses typeMethods to seed the cache
+ [x] each instance has separate cache
+ [x] NULL gets cached
+ [x] array gets cached
+ [x] true gets cached
+ [x] false gets cached
+ [x] double gets cached
+ [x] integer gets cached
+ [x] object gets cached
+ [x] resource gets cached
+ [x] string gets cached
+ [x] will check the cache first
+ [x] returns nothingMatchesTheInputType when no match found
+ [x] can change the default fallback when no match found</code></pre>
+<p>Class contracts are built from this class's unit tests.</p>
+<div class="callout success">
+Future releases of this class will not break this contract.
+</div>
+<div class="callout info">
+<p>Future releases of this class may add to this contract. New additions may include:</p>
+<ul>
+<li>clarifying existing behaviour (e.g. stricter contract around input or return types)</li>
+<li>add new behaviours (e.g. extra class methods)</li>
+</ul>
+</div>
+<div class="callout warning">
+<p>When you use this class, you can only rely on the behaviours documented by this contract.</p>
+<p>If you:</p>
+<ul>
+<li>find other ways to use this class,</li>
+<li>or depend on behaviours that are not covered by a unit test,</li>
+<li>or depend on undocumented internal states of this class,</li>
+</ul>
+<p>... your code may not work in the future.</p>
+</div>
+<h2 id="notes">Notes</h2>
+<p>None at this time.</p>
+            </article>
+
+                        <nav class="pageflow">
+              <ul>
+                                    <li><a href="ObjectsOnlyDispatchTable.html">Prev: ObjectsOnlyDispatchTable class</a></li>
+                                                      <li></li>
+                                </ul>
+            </nav>
+                    </main>
+
+        <aside class="sidebar">
+            <h2>This Page</h2>
+            <nav class="toc" data-type="ishi-toc" data-max-depth="3">
+            </nav>
+        </aside>
+        <footer>
+            <div class="strapline">
+                <p>Copyright &copy; 2015 <a href="http://ganbarodigital.com">Ganbaro Digital Ltd</a>. Released under the <a href="http://ganbarodigital.github.io/php-mv-polymorphism/license.html">New BSD</a> license.
+                                            Find Polymorphism Library for PHP on <a href="https://github.com/ganbarodigital/php-mv-polymorphism">GitHub</a>.
+                                        Built with <a href="http://couscous.io/">Couscous</a>.
+                </p>
+            </div>
+        </footer>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/laroux.js"></script>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ishi.js"></script>
+    </body>
+</html>

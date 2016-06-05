@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--[if lt IE 9]>
+            <script src="assets/html5shiv.js"></script>
+            <script src="assets/html5printshiv.js"></script>
+        <![endif]-->
+        <meta charset="utf-8"/>
+        <title>Polymorphism Library for PHP from Ganbaro Digital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/docs.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.css">
+        <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.js"></script>
+    </head>
+    <body data-ishi-anchors="1">
+        <header role="banner">
+            <div>
+                <p style="font-size: 34px; padding-top: 10px">Polymorphism Library for PHP</p>
+                <p style="font-size: 18px; border-bottom: 1px solid; padding-bottom: 10px">Polymorphism support for your code</p>
+            </div>
+            <!--<a href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">
+                <img src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ganbarodigital.svg" width="60" height="60" style="vertical-align: middle; float: left; margin-right: 15px">
+            </a>-->
+            <nav class="navbar topbar">
+                <ul>
+                                            <li class="current">
+                            <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">Overview</a>
+                        </li>
+                                            <li class="">
+                            <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Version 1.x</a>
+                        </li>
+                                    </ul>
+            </nav>
+        </header>
+                                                        <header role="subnav">
+                        <nav class="navbar">
+                            <ul>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">Home</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/license.html">License</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/installation.html">Installation</a>
+                                    </li>
+                                                                    <li class="current">
+                                        <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/multivariant.html">Multi-Variant</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/changelog.html">Changelog</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/contributing.html">Contributing</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/code-of-conduct.html">Code of Conduct</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/authors.html">Authors</a>
+                                    </li>
+                                                            </ul>
+                        </nav>
+                    </header>
+                                                                <main role="main">
+                        <nav class="pageflow">
+              <ul>
+                                    <li><a href="installation.html">Prev: Installation</a></li>
+                                                      <li><a href="changelog.html">Next: Changelog</a></li>
+                                </ul>
+            </nav>
+            
+            <article>
+                <h1 id="multi-variant">Multi-Variant</h1>
+<p>The <em>Polymorphism Library</em> is <em>multi-variant</em>. What does that mean?</p>
+<h2 id="what-is-multi-variant">What Is Multi-Variant?</h2>
+<p>In a normal library, when you install it via <code>composer</code>, you get one version of the library. You'll choose between version 1.x, version 2.x, version 3.x and so on.</p>
+<p>In a <em>multi-variant</em> library, the library includes all of the different versions. You get version 1.x, version 2.x and version 3.x (and so on) installed at the same time. Each version of the library has its own <em>namespace</em>. Your code can use multiple versions at the same time.</p>
+<p>The <em>Polymorphism Library</em> uses these namespaces:</p>
+<ul>
+<li><code>GanbaroDigital\Polymorphism\V1</code> - version 1.x of the library</li>
+<li><code>GanbaroDigital\Polymorphism\V2</code> - reserved for version 2.x of the library</li>
+</ul>
+<p>These are the library's <em>API versions</em>.</p>
+<h2 id="why-do-we-need-multi-variant-libraries">Why Do We Need Multi-Variant Libraries?</h2>
+<p>Version 2.x of a library's API is normally incompatible with version 1.x of the same library. This is good practice. Unfortunately, that leads to some problems with PHP's lack of code module support.</p>
+<ul>
+<li>It's currently common practice for version 1.x and version 2.x of a library to re-use the same PHP namespace.</li>
+<li>One part of an app can't use version 1.x of a library, whilst a different part of an app uses version 2.x of the same library.</li>
+<li>It's also currently common practice for Git tags to use the library's API version number. For example, if the library's API is at <code>v2.6.3</code>, the Git tag would also be <code>v2.6.3</code>.</li>
+<li>The Composer package manager has to use the Git tags to work out which version of the library to install.</li>
+</ul>
+<p>As a result, the Composer package manager won't let you install both version 1.x and version 2.x of the same library at the same time.</p>
+<p>This becomes a blocker when your application has dependencies that use different versions of the same library. All of a sudden, you have conflicts in Composer that you cannot resolve.</p>
+<p>Multi-variant libraries avoid this problem entirely.</p>
+<ul>
+<li>As far as Composer is concerned, all the dependencies can use the same <em>tagged version</em> of the library.</li>
+<li>As far as each dependency is concerned, the <em>API version</em> of the library that it needs is installed and available for use.</li>
+</ul>
+<h2 id="how-do-we-version-multi-variant-libraries">How Do We Version Multi-Variant Libraries?</h2>
+<p>Multi-variant libraries use <strong>v1.YYYYMMDDRR</strong> style for Git tags:</p>
+<ul>
+<li><em>YYYY</em> is the year the library was released (as four digits)</li>
+<li><em>MM</em> is the month the library was released (two digits, January is <em>01</em>)</li>
+<li><em>DD</em> is the day of the month that the library was released (two digits)</li>
+<li><em>RR</em> is how many times the library has been released on that day (two digits)</li>
+</ul>
+<p>For example: <em>v1.2016041401</em>, or <em>v1.2016041502</em>.</p>
+<p>Why are there no '.' between the different parts?</p>
+<ul>
+<li>When you use <code>composer require</code>, it adds a <code>^X.Y</code> constraint to your list of requirements. This will accept all tags that start with <code>X</code>. It will not accept any tag that starts with <code>X+1</code> or more.</li>
+<li>If we used <em>v2016.04.14.01</em> as the tag, <code>composer require</code> would add <code>^v2016.04</code> as the constraint. This doesn't make any sense for multi-variant libraries, because <em>2016</em> doesn't mean that the library isn't compatible with anything tagged <em>2015</em>.</li>
+</ul>
+            </article>
+
+                        <nav class="pageflow">
+              <ul>
+                                    <li><a href="installation.html">Prev: Installation</a></li>
+                                                      <li><a href="changelog.html">Next: Changelog</a></li>
+                                </ul>
+            </nav>
+                    </main>
+
+        <aside class="sidebar">
+            <h2>This Page</h2>
+            <nav class="toc" data-type="ishi-toc" data-max-depth="3">
+            </nav>
+        </aside>
+        <footer>
+            <div class="strapline">
+                <p>Copyright &copy; 2015 <a href="http://ganbarodigital.com">Ganbaro Digital Ltd</a>. Released under the <a href="http://ganbarodigital.github.io/php-mv-polymorphism/license.html">New BSD</a> license.
+                                            Find Polymorphism Library for PHP on <a href="https://github.com/ganbarodigital/php-mv-polymorphism">GitHub</a>.
+                                        Built with <a href="http://couscous.io/">Couscous</a>.
+                </p>
+            </div>
+        </footer>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/laroux.js"></script>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ishi.js"></script>
+    </body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--[if lt IE 9]>
+            <script src="assets/html5shiv.js"></script>
+            <script src="assets/html5printshiv.js"></script>
+        <![endif]-->
+        <meta charset="utf-8"/>
+        <title>Polymorphism Library for PHP from Ganbaro Digital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/docs.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.css">
+        <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/prism.js"></script>
+    </head>
+    <body data-ishi-anchors="1">
+        <header role="banner">
+            <div>
+                <p style="font-size: 34px; padding-top: 10px">Polymorphism Library for PHP</p>
+                <p style="font-size: 18px; border-bottom: 1px solid; padding-bottom: 10px">Polymorphism support for your code</p>
+            </div>
+            <!--<a href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">
+                <img src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ganbarodigital.svg" width="60" height="60" style="vertical-align: middle; float: left; margin-right: 15px">
+            </a>-->
+            <nav class="navbar topbar">
+                <ul>
+                                            <li class="">
+                            <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/index.html">Overview</a>
+                        </li>
+                                            <li class="current">
+                            <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Version 1.x</a>
+                        </li>
+                                    </ul>
+            </nav>
+        </header>
+                                                                            <header role="subnav">
+                        <nav class="navbar">
+                            <ul>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/index.html">Introduction</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/Interfaces/index.html">Interfaces</a>
+                                    </li>
+                                                                    <li class="">
+                                        <a class="" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/DispatchTables/index.html">DispatchTables</a>
+                                    </li>
+                                                                    <li class="current">
+                                        <a class="current" href="http://ganbarodigital.github.io/php-mv-polymorphism/V1/TypeMapping/index.html">TypeMapping</a>
+                                    </li>
+                                                            </ul>
+                        </nav>
+                    </header>
+                                            <main role="main">
+                        <nav class="pageflow">
+              <ul>
+                                    <li><a href="index.html">Prev: TypeMapping Introduction</a></li>
+                                                      <li><a href="MapStrictTypeToMethodName.html">Next: MapStrictTypeToMethodName class</a></li>
+                                </ul>
+            </nav>
+            
+            <article>
+                <h1 id="mapducktypetomethodname">MapDuckTypeToMethodName</h1>
+<div class="callout info">
+Since v1.2016060501
+</div>
+<h2 id="description">Description</h2>
+<p><code>MapDuckTypeToMethodName</code> is a <a href="../Interfaces/TypeMapper.html"><code>TypeMapper</code></a>. It uses a variable's duck types and a dispatch table to map a variable onto a suitable method name.</p>
+<div class="callout info">
+<h4 id="what-are-duck-types">What Are Duck Types?</h4>
+<p>Duck types are the list of types that a variable can be safely treated as. They help you safely handle a wider range of input variables with less code.</p>
+<p>For example, you don't need to write one method to handle <code>array</code>, another to handle <code>Traversable</code> objects, and a third to handle <code>stdClass</code> objects. You can write a single method to handle anything with the <code>Traversable</code> duck type, as long as that method uses <code>foreach()</code> loop.</p>
+<p>Duck types are not compatible with the strict type declarations added in PHP 7.0. If you need to work with strict type declarations, use <a href="MapStrictTypeToMethodName.html"><code>MapStrictTypeToMethodName</code></a> instead.</p>
+</div>
+<h2 id="public-interface">Public Interface</h2>
+<p><code>MapDuckTypeToMethodName</code> has the following public interface:</p>
+<pre><code class="language-php">// MapDuckTypeToMethodName lives in this namespace
+namespace GanbaroDigital\Polymorphism\V1\TypeMapping;
+
+// our base classes and interfaces
+use GanbaroDigital\Polymorphism\V1\Interfaces\TypeMapper;
+
+class MapDuckTypeToMethodName implements TypeMapper
+{
+    /**
+     * use an input item's data type to work out which method we should
+     * call
+     *
+     * @param  mixed $item
+     *         the item we want to dispatch
+     * @param  array $dispatchTable
+     *         the list of methods that are available
+     * @param  string $fallback
+     *         the value to return if there's no suitable entry for $item
+     *         in $dispatchTable
+     * @return string
+     *         the name of the method to call
+     */
+    public function __invoke(
+        $item,
+        array $dispatchTable,
+        $fallback = TypeMapper::FALLBACK_RESULT
+    );
+
+    /**
+     * use an input item's data type to work out which method we should
+     * call
+     *
+     * @param  mixed $item
+     *         the item we want to dispatch
+     * @param  array $dispatchTable
+     *         the list of methods that are available
+     * @param  string $fallback
+     *         the value to return if there's no suitable entry for $item
+     *         in $dispatchTable
+     * @return string
+     *         the name of the method to call
+     */
+    public static function using(
+         $item,
+         array $dispatchTable,
+         $fallback = TypeMapper::FALLBACK_RESULT
+    );
+}</code></pre>
+<h2 id="how-to-use">How To Use</h2>
+<h3 id="adding-polymorphism-to-your-code">Adding Polymorphism To Your Code</h3>
+<p>Here's an example of how to use <code>MapDuckTypeToMethodName</code>.</p>
+<p><code>TrimWhitespace</code> is a utility that will remove leading and trailing whitespace from variables. It will work with anything that we can iterate over, or that we can turn into a string.</p>
+<p>The first step is to define a <em>dispatch table</em>:</p>
+<pre><code class="language-php">use GanbaroDigital\Polymorphism\V1\TypeMapping\MapDuckTypeToMethodName;
+
+class TrimWhitespace
+{
+    private static $dispatchTable = [
+        'Traversable' =&gt; 'trimFromTraversable',
+        'string' =&gt; 'trimFromString'
+    ];
+}</code></pre>
+<p>The <em>dispatch table</em> is a list of supported types, and the method we want to call for that type. It's a regular PHP array. The order of the entries in the dispatch table is not important.</p>
+<div class="callout info">
+<h4 id="what-order-are-matches-made-in">What Order Are Matches Made In?</h4>
+<p><code>MapDuckTypeToMethodName</code> uses <a href="http://ganbarodigital.github.io/php-the-missing-bits/types/GetDuckTypes.html"><code>GetDuckTypes</code></a> internally. <code>GetDuckTypes</code> returns an ordered list of matching types. The list order is:</p>
+<ul>
+<li>most specific type - e.g. an object's class name</li>
+<li>substitution types - e.g. an object's parent classes and interfaces</li>
+<li>coercable types - e.g. <code>callable</code>, <code>numeric</code>, objects that are stringy, or strings that are <code>double</code> or <code>integer</code></li>
+<li>generic types - e.g. <code>object</code>, <code>string</code></li>
+</ul>
+<p><code>MapDuckTypeToMethodName</code> works down the list that <code>GetDuckTypes</code> provides until it finds a match in dispatch table that you've provided.</p>
+<p>If there is no match, the <code>$fallback</code> is returned to you. You'll find more information about that further down this page.</p>
+</div>
+<p>If you look closely, you'll see that we haven't added any entry for PHP arrays at all. How's that going to work? <code>MapDuckTypeToMethodName</code> uses a variable's <em>duck types</em> to make the match. <code>Traversable</code> is one of <code>array</code>'s duck types.</p>
+<p>Next, we define the method that is polymorphic:</p>
+<pre><code class="language-php">    public static function from($item)
+    {
+        $methodToCall = MapDuckTypeToMethodName::using($item, static::$dispatchTable);
+        return self::$methodToCall($item);
+    }</code></pre>
+<p>This method does two things:</p>
+<ol>
+<li>calls <code>MapDuckTypeToMethodName::using()</code> to find out which method to send <code>$item</code> to</li>
+<li>sends <code>$item</code> to the method that has been chosen</li>
+</ol>
+<p>That's it.</p>
+<p>Note how it's <code>TrimWhitespace::from()</code> that calls the method, not <code>MapDuckTypeToMethodName</code>. This keeps your PHP stack size down, and it keeps your stack traces nice and clean in case the method you're calling (or the methods it calls) throw any exceptions.</p>
+<p>With our polymorphic method built, we need to add the methods that are listed in the dispatch table:</p>
+<pre><code class="language-php">    private static function trimFromTraversable($item)
+    {
+        $retval = [];
+        foreach ($item as $key =&gt; $value) {
+            $retval[$key] = self::from($value);
+        }
+        return $retval;
+    }
+
+    private static function trimFromString($item)
+    {
+        // PHP will coerce into a string for us
+        return trim($item);
+    }</code></pre>
+<p><code>::trimFromTraversable()</code> iterates over <code>$item</code>, and calls our polymorphic method <code>TrimWhitespace::from()</code> to trim the whitespace from each entry in <code>$item</code>. This gives us automatic support for trimming the whitespace from nested arrays, or objects that contain arrays.</p>
+<div class="callout warning">
+<h4 id="beware-of-recursive-data-structures">Beware Of Recursive Data Structures</h4>
+<p>If you defined data structures that contain references back to themselves, then our <code>::trimFromTraversable()</code> example will loop forever. To find out if your data structure is recursive, try using <code>var_dump()</code> or <code>var_export()</code> to examine it.</p>
+</div>
+<p><code>::trimFromString()</code> uses PHP's built-in <code>trim</code> function to strip the whitespace for us. If <code>$item</code> is a stringy object (ie an object that implements <code>::__toString()</code>), PHP will automatically coerce it into a string for us.</p>
+<p>We're almost done. There's one thing left to deal with: what happens when there's no suitable entry for <code>$item</code> in our dispatch table.</p>
+<p>When there's no match, <code>TypeMapper</code> objects return the value of the <code>$fallback</code> parameter. By default, this is the string <code>nothingMatchesTheInputType</code>. You can override it if you ever need to.</p>
+<p>For our example <code>TrimWhitespace</code>, we're going to stick with the default, and add a method called <code>nothingMatchesTheInputType</code>:</p>
+<pre><code class="language-php">    private static function nothingMatchesTheInputType($item)
+    {
+        return $item;
+    }</code></pre>
+<div class="callout info">
+<p>It's for you to decide what the fallback method should do. The fallback method is part of your code.</p>
+</div>
+<p>For <code>TrimWhitespace</code>, we could throw an exception ... but is it really an error to call <code>TrimWhitespace</code> with a data type that we can't trim whitespace from? That's a judgement call.</p>
+<p>Here's what the final class looks like:</p>
+<pre><code class="language-php">use GanbaroDigital\Polymorphism\V1\TypeMapping\MapDuckTypeToMethodName;
+
+class TrimWhitespace
+{
+    /**
+     * a mapping of types to methods
+     * @type array
+     */
+    private static $dispatchTable = [
+        'Traversable' =&gt; 'trimFromTraversable',
+        'string' =&gt; 'trimFromString'
+    ];
+
+    /**
+     * trim the leading and trailing whitespace from your variable
+     *
+     * @param  mixed $item
+     *         the variable to be trimmed
+     * @return array|string
+     *         your data, with any whitespace trimmed
+     */
+    public static function from($item)
+    {
+        $methodToCall = MapDuckTypeToMethodName::using($item, static::$dispatchTable);
+        return self::$methodToCall($item);
+    }
+
+    /**
+     * trim the leading and trailing whitespace from an array
+     * or a traversable object
+     *
+     * @param  array|object $item
+     *         the variable to be trimmed
+     * @return array
+     *         the trimmed data
+     */
+    private static function trimFromTraversable($item)
+    {
+        $retval = [];
+        foreach ($item as $key =&gt; $value) {
+            $retval[$key] = self::from($value);
+        }
+        return $retval;
+    }
+
+    /**
+     * trim the leading and trailing whitespace from a string
+     *
+     * @param  string $item
+     *         the string to be trimmed
+     * @return string
+     *         the trimmed data
+     */
+    private static function trimFromString($item)
+    {
+        // PHP will coerce into a string for us
+        return trim($item);
+    }
+
+    /**
+     * called when we're asked to trim data from a datatype
+     * that we do not know how to handle
+     *
+     * @param  mixed $item
+     *         the item that we don't know how to trim
+     * @return mixed
+     *         will return the same data type as $item
+     */
+    private static function nothingMatchesTheInputType($item)
+    {
+        // we don't know how to process $item, so let's just
+        // send back exactly what we received
+        return $item;
+    }
+
+}</code></pre>
+<h3 id="speeding-things-up">Speeding Things Up</h3>
+<p><code>MapDuckTypeToMethodName</code> can be an expensive operation - especially if you're using anything before PHP 7.0. It doesn't implement an internal cache at all, because the results returned are unique to each <code>$dispatchTable</code>.</p>
+<p>Use a <a href="../DispatchTables/index.html">caching dispatch table object</a> to speed up repeated calls to your polymorphic method:</p>
+<pre><code class="language-php">use GanbaroDigital\Polymorphism\V1\DispatchTables\AllPurposeDispatchTable;
+use GanbaroDigital\Polymorphism\V1\TypeMapping\MapDuckTypeToMethodName;
+
+class TrimWhitespace
+{
+    // this becomes a DispatchTable object
+    private static $dispatchTable;
+
+    // this is new, and is called once when the class is
+    // autoloaded
+    public static function initDispatchTable()
+    {
+        self::$dispatchTable = new AllPurposeDispatchTable(
+            [
+                'Traversable' =&gt; 'trimFromTraversable',
+                'string' =&gt; 'trimFromString'
+            ],
+            new MapDuckTypeToMethodName
+        );
+    }
+
+    // this is substantially changed from our previous example
+    public static function from($item)
+    {
+        // instead of calling MapDuckTypeToMethodName directly, we let our new
+        // DispatchTable do it for us
+        //
+        // it will only call MapDuckTypeToMethodName if it has no cached
+        // result for $item
+        $method = self::$dispatchTable-&gt;mapTypeToMethodName($item);
+
+        // this is the same as our earlier example
+        return self::$method($item);
+    }
+
+    // same as our first example
+    private static function trimFromTraversable($item)
+    {
+        $retval = [];
+        foreach ($item as $key =&gt; $value) {
+            $retval[$key] = self::from($value);
+        }
+        return $retval;
+    }
+
+    // same as our first example
+    private static function trimFromString($item)
+    {
+        // PHP will coerce into a string for us
+        return trim($item);
+    }
+
+    // same as our first example
+    private static function nothingMatchesTheInputType($item)
+    {
+        // we don't know how to process $item, so let's just
+        // send back exactly what we received
+        return $item;
+    }
+}
+
+// NEW IN THIS EXAMPLE
+// this will get called when the class is autoloaded
+TrimWhitespace::initDispatchTable();</code></pre>
+<h3 id="customising-the-fallback-result">Customising The Fallback Result</h3>
+<p>Are you adding multiple polymorphic methods to a single class? If you are, you'll probably need each polymorphic method to call a different fallback method when there's no match.</p>
+<p>The third parameter to <code>MapDuckTypeToMethodName::using()</code> contains the value to return when there's no match. Simply pass in a different value:</p>
+<pre><code class="language-php">use GanbaroDigital\Polymorphism\V1\TypeMapping\MapDuckTypeToMethodName;
+
+// hypothetical business logic class that supports refunding
+// different types of purchases
+//
+// the logic is separate to the business entity so that we can load
+// the correct logic for each market we operate in
+class RefundPaymentUnitedKingdom implements RefundLogic
+{
+    // this is polymorphic
+    public function isRefundable($item)
+    {
+        // the contents of $dispatchTable are not
+        // important for this example
+        $dispatchTable = ...;
+
+        $method = MapDuckTypeToMethodName::using(
+            $item,
+            $dispatchTable,
+            "notRefundable"
+        );
+        return $this-&gt;{$method}($item);
+    }
+
+    // this is the fallback method for isRefundable()
+    private function notRefundable()
+    {
+        return false;
+    }
+
+    // this is polymorphic
+    public function refundTerms($item)
+    {
+        // the contents of $dispatchTable are not
+        // important for this example
+        $dispatchTable = ...;
+
+        $method = MapDuckTypeToMethodName::using(
+            $item,
+            $dispatchTable,
+            "noRefundTerms"
+        );
+        return $this-&gt;{$method}($item);
+    }
+
+    // this is the fallback method for refundTerms()
+    private function noRefundTerms()
+    {
+        return [];
+    }
+}</code></pre>
+<p>In the example above, <code>::isRefundable()</code> will call <code>::notRefundable()</code> if there's no match for <code>$item</code>. Similarly, <code>::refundTerms()</code> will call <code>::noRefundTerms()</code> if there is no match.</p>
+<h2 id="class-contract">Class Contract</h2>
+<p>Here is the contract for this class:</p>
+<pre><code>GanbaroDigital\Polymorphism\V1\TypeMapping\MapDuckTypeToMethodName
+ [x] Can instantiate
+ [x] is TypeMapper
+ [x] Can use as object
+ [x] Can call statically
+ [x] will match NULL
+ [x] can match array as array
+ [x] can match array as callable
+ [x] can match array as Traversable
+ [x] can match true as boolean
+ [x] can match false as boolean
+ [x] can match double as double
+ [x] can match double as numeric
+ [x] can match integer as integer
+ [x] can match integer as numeric
+ [x] can match object as object
+ [x] can match object as parent
+ [x] can match object as interface
+ [x] can match object as callable
+ [x] can match object as string
+ [x] can match resource
+ [x] can match string
+ [x] can match string as callable
+ [x] can match string as numeric
+ [x] can match string as double
+ [x] can match string as integer
+ [x] can match string as classname
+ [x] can match string as interface
+ [x] returns nothingMatchesTheInputType when no match found
+ [x] can change the default fallback when no match found</code></pre>
+<p>Class contracts are built from this class's unit tests.</p>
+<div class="callout success">
+Future releases of this class will not break this contract.
+</div>
+<div class="callout info">
+<p>Future releases of this class may add to this contract. New additions may include:</p>
+<ul>
+<li>clarifying existing behaviour (e.g. stricter contract around input or return types)</li>
+<li>add new behaviours (e.g. extra class methods)</li>
+</ul>
+</div>
+<div class="callout warning">
+<p>When you use this class, you can only rely on the behaviours documented by this contract.</p>
+<p>If you:</p>
+<ul>
+<li>find other ways to use this class,</li>
+<li>or depend on behaviours that are not covered by a unit test,</li>
+<li>or depend on undocumented internal states of this class,</li>
+</ul>
+<p>... your code may not work in the future.</p>
+</div>
+<h2 id="notes">Notes</h2>
+<p>None at this time.</p>
+            </article>
+
+                        <nav class="pageflow">
+              <ul>
+                                    <li><a href="index.html">Prev: TypeMapping Introduction</a></li>
+                                                      <li><a href="MapStrictTypeToMethodName.html">Next: MapStrictTypeToMethodName class</a></li>
+                                </ul>
+            </nav>
+                    </main>
+
+        <aside class="sidebar">
+            <h2>This Page</h2>
+            <nav class="toc" data-type="ishi-toc" data-max-depth="3">
+            </nav>
+        </aside>
+        <footer>
+            <div class="strapline">
+                <p>Copyright &copy; 2015 <a href="http://ganbarodigital.com">Ganbaro Digital Ltd</a>. Released under the <a href="http://ganbarodigital.github.io/php-mv-polymorphism/license.html">New BSD</a> license.
+                                            Find Polymorphism Library for PHP on <a href="https://github.com/ganbarodigital/php-mv-polymorphism">GitHub</a>.
+                                        Built with <a href="http://couscous.io/">Couscous</a>.
+                </p>
+            </div>
+        </footer>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/laroux.js"></script>
+    <script src="http://ganbarodigital.github.io/php-mv-polymorphism/assets/ishi.js"></script>
+    </body>
+</html>
