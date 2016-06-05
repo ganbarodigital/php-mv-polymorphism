@@ -62,6 +62,9 @@ menu:
             Interfaces:
                 text: Interfaces
                 relativeUrl: V1/Interfaces/index.html
+            DispatchTables:
+                text: DispatchTables
+                relativeUrl: V1/DispatchTables/index.html
             TypeMapping:
                 text: TypeMapping
                 relativeUrl: V1/TypeMapping/index.html

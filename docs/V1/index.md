@@ -23,7 +23,8 @@ Version 1 ships with the following namespaces:
 
 Namespace | Purpose
 ----------|--------
-[`GanbaroDigital\Polymorphic\V1\Interfaces`](Interfaces/index.html) | interfaces defined by the Polymorphism Library
-[`GanbaroDigital\Polymorphic\V1\TypeMapping`](TypeMapping/index.html) | map types onto methods
+[`GanbaroDigital\Polymorphism\V1\Interfaces`](Interfaces/index.html) | interfaces defined by the Polymorphism Library
+[`GanbaroDigital\Polymorphism\V1\DispatchTables`](DispatchTables/index.html) | caching wrappers around the `TypeMapper`
+[`GanbaroDigital\Polymorphism\V1\TypeMapping`](TypeMapping/index.html) | map types onto methods
 
 Click on the namespace to learn more about the classes in that component.

@@ -16,3 +16,6 @@ pageflow_next_text: Contributing
   - added `TypeMapper` interface
   - added `MapDuckTypeToMethodName` class
   - added `MapStrictTypeToMethodName` class
+* Added support for improving performance of type mapping using intelligent caching dispatch tables:
+  - added `DispatchTable` interface
+  - added `AllPurposeDispatchTable` class

@@ -18,7 +18,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^4.6",
-        "couscous/couscous": "dev-develop"
+        "couscous/couscous": "dev-develop",
+        "ganbarodigital/php-mv-unit-test-helpers": "^1.2016060502"
     },
     "autoload": {
         "psr-4": {
