@@ -19,10 +19,11 @@ The key idea in Version 1 is _type mapping_:
 
 ## Components
 
-Version 1 ships with the following components:
+Version 1 ships with the following namespaces:
 
 Namespace | Purpose
 ----------|--------
+[`GanbaroDigital\Polymorphic\V1\Interfaces`](Interfaces/index.html) | interfaces defined by the Polymorphism Library
 [`GanbaroDigital\Polymorphic\V1\TypeMapping`](TypeMapping/index.html) | map types onto methods
 
 Click on the namespace to learn more about the classes in that component.
