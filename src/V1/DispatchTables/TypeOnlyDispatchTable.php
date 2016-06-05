@@ -114,9 +114,12 @@ class TypeOnlyDispatchTable implements DispatchTable
      */
     public function mapTypeToMethodName($item)
     {
-        // we are optimised for objects
-        $type = @get_class($item);
-        if ($type === false || $item === NULL) {
+        // this provides the best all-around performance for both
+        // objects and non-objects
+        if (is_object($item)) {
+            $type = get_class($item);
+        }
+        else {
             $type = gettype($item);
         }
 

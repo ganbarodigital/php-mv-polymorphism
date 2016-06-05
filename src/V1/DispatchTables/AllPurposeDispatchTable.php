@@ -111,9 +111,11 @@ class AllPurposeDispatchTable implements DispatchTable
      */
     public function mapTypeToMethodName($item)
     {
-        // we are optimised for objects
-        $type = @get_class($item);
-        if ($type === false || $item === null) {
+        // we are optimised for objects, because they can be cached
+        if (is_object($item)) {
+            $type = get_class($item);
+        }
+        else {
             if (is_string($item) || is_array($item)) {
                 // it isn't safe to cache these data types
                 // the result depends upon their contents
